@@ -63,16 +63,26 @@ function removeDuplicates(string) {
   // Set each character as a property, overwriting
   // duplicates.
   let newStr = "";
+  // VERSION 1 without peek()
+  // for (let char of string) {
+  //   noDups.set(char, char);
+  //   if (!newStr.includes(char)) {
+  //     newStr += noDups.get(char);
+  //   }
+  // }
+
+  // VERSION 2 with peek()
   for (let char of string) {
-    noDups.set(char, char);
-    if (!newStr.includes(char)) {
-      newStr += noDups.get(char);
+    if (!noDups.peek(char)) {
+      noDups.set(char, char)
+      newStr += char
     }
   }
+
   return newStr;
 }
 
-// console.log(removeDuplicates('google all that you think can think of'));
+console.log(removeDuplicates('google all that you think can think of'));
 
 function containsPalindrome(string) {
   const hash = new HashMap();
@@ -91,7 +101,6 @@ function containsPalindrome(string) {
   for (let char of string) {
       hash.set(char, 0);
   }
-  
   // Count the number of occurrences of each char
   for (let char of string) {
     hash.set(char, hash.get(char) + 1);
@@ -114,3 +123,21 @@ function containsPalindrome(string) {
 console.log(containsPalindrome('google')); // false
 console.log(containsPalindrome('acecarr')); // true
 console.log(containsPalindrome('north')); // false
+
+function anagramGroups(array) {
+  let hash = new HashMap();
+  // arrange chars in each str in alphabetical order
+  array.forEach(str => {
+    const alphaStr = str.split('').sort().join('');
+    !hash.peek(alphaStr)
+      ? hash.set(alphaStr, [str])
+      : hash.get(alphaStr).push(str);
+  });
+  // Format output
+  const output = hash._hashTable.map(property => property.value);
+  return output;
+}
+
+const input = ['east', 'cars', 'acre', 'arcs', 'teas', 'eats', 'race'];
+// Output: [['east', 'teas', 'eats'], ['cars', 'arcs'], ['acre', 'race']]
+console.log(anagramGroups(input));
