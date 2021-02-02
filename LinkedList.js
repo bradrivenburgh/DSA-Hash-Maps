@@ -147,7 +147,7 @@ class LinkedList {
       return null;
     }
     // Check for the item
-    while (currNode.value !== item) {
+    while (currNode.value.key !== item) {
       /* Return null if it's the end of the list
          and the item is not on the list */
       if (currNode.next === null) {
@@ -159,7 +159,7 @@ class LinkedList {
       }
     }
     // Found it
-    return currNode;
+    return currNode.value.value;
   }
 
   remove(item) {
